@@ -118,7 +118,11 @@ private:
 	*/
 	Node<T>* succ(Node<T>* ptr);
 	/**
-	* wyświetlanie drzewa
+	* wyświetlanie drzewa, funkcja pomocnicza
+	*
+	* @param ptr wyświetlany węzeł
+	* @param sp napis pomocniczy
+	* @param sn węzeł określający dziecko
 	*/
 	void show(Node<T>* ptr, std::string sp, std::string sn);
 };
