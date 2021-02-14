@@ -9,10 +9,10 @@ public:
 
 int main() {
 	Tree<int> a;
-	a.insert(5);
-	a.insert(6);
-std::cout<<a.find(6)<<std::endl;
-std::cout<<a.remove(5)<<std::endl;
-std::cout<<a.remove(6)<<std::endl;
+	a.insert(60);
+	a.insert(80);
+	a.insert(90);
+	a.insert(70);
+a.show();
 	return 0;
 }

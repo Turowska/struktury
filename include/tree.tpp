@@ -34,7 +34,7 @@ template <class T> void Tree<T>::insert(T key) {
 	ptr = new Node<T>(key, parentPtr);
 	if(parentPtr==NULL) {
 		root_ = ptr;
-	} else if(compare(key, parentPtr->key)){
+	} else if(compare(key, parentPtr->key)==1){
 		parentPtr->rightChild = ptr;
 	} else {
 		parentPtr->leftChild = ptr;
@@ -63,6 +63,28 @@ template <class T> T Tree<T>::find(T key) {
 		}
 	}
 	throw 0;
+}
+
+template <class T> void Tree<T>::show() {
+	show(root_, "", "");
+}
+
+template <class T> void Tree<T>::show(Node<T>* ptr, std::string sp, std::string sn) {
+	if(ptr!=NULL) {
+		std::string cr = ",-";
+		std::string cl = "'-";
+		std::string cp = "| ";
+		std::string s = sp;
+		if(sn == cr) s[s.length()-2]=' ';
+		show(ptr->rightChild, s+cp, cr);
+
+		s = s.substr(0, sp.length()-2);
+		std::cout<<s<<sn<<ptr->key<<std::endl;
+
+		s = sp;
+		if(sn == cl) s[s.length()-2]=' ';
+		show(ptr->leftChild, s+cp, cl);
+	}
 }
 
 template <class T> Node<T>* Tree<T>::findNode(T key) {

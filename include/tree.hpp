@@ -5,6 +5,7 @@
 */
 
 #include "compare.hpp"
+#include <string>
 
 /**
 * pojedynczy węzeł drzewa
@@ -71,12 +72,17 @@ public:
 	* @return wyszukany element, jeśli nie ma - zwraca NULL
 	*/
 	virtual T find(T key);
+	/**
+	* wyświetlanie drzewa
+	*/
+	void show();
 
-private:
+//private:
 	/**
 	* korzeń drzewa
 	*/
 	Node<T>* root_;
+private:
 	/**
 	* wyszukanie węzła o danym kluczu
 	*
@@ -112,6 +118,10 @@ private:
 	* @return następnik węzła
 	*/
 	Node<T>* succ(Node<T>* ptr);
+	/**
+	* wyświetlanie drzewa
+	*/
+	void show(Node<T>* ptr, std::string sp, std::string sn);
 };
 
 #include "tree.tpp"
