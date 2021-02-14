@@ -77,12 +77,11 @@ public:
 	*/
 	void show();
 
-//private:
+private:
 	/**
 	* korzeń drzewa
 	*/
 	Node<T>* root_;
-private:
 	/**
 	* wyszukanie węzła o danym kluczu
 	*
