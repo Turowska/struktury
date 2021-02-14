@@ -1,0 +1,20 @@
+import os
+import platform
+import shutil
+
+if(platform.system() == "Linux"):
+    print("Linux!")
+    env = Environment()
+    env.Append(CPPFLAGS='-pedantic -Wall -std=c++17')
+    env.Append(CPPPATH = ['./include'])
+    VariantDir('#/object', '#/src', duplicate=0)
+    env.Program('struktury', [Glob('#/object/*.cpp')])
+elif(platform.system() == "Windows"):
+    print("Windows!")
+    env = Environment()
+    env.Append(CPPPATH = ['./include'])
+    env.Append( CPPFLAGS = ' /EHsc /D "WIN32" /D "_WIN32_WINNT#0x501" /D "_CONSOLE" /W4 /MD /std:c++17' )
+    VariantDir('#/object', '#/src', duplicate=0)
+    env.Program('struktury', [Glob('#/object/*.cpp')])
+else:
+    print(platform.system() + " not supported")
