@@ -1,4 +1,5 @@
 #include "treeAVL.hpp"
+#include "treeSplay.hpp"
 
 #include <iostream>
 

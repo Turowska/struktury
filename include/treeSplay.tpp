@@ -1,20 +1,20 @@
 #include "treeSplay.hpp"
 
 template <class T> bool TreeSplay<T>::insert(T key) {
-	if(root_==NULL) {
-		root_ = new Node<T>(key, NULL, NULL);
+	if(this->root_==NULL) {
+		this->root_ = new Node<T>(key, NULL, NULL);
 	} else {
 		find(key);
-		int scoreCompare = compare(key, root_->key);
+		int scoreCompare = compare(key, this->root_->key);
 		if(scoreCompare == 0) {
 			return false;
 		} else if(scoreCompare == 1) {
-			root_ = new Node<T>(key, root_, root_->rightChild);
+			this->root_ = new Node<T>(key, this->root_, this->root_->rightChild);
 		} else {
-			root_ = new Node<T>(key, root_->leftChild, root_);
+			this->root_ = new Node<T>(key, this->root_->leftChild, this->root_);
 		}
-		if(root_->leftChild) root_->leftChild->parent = root_;
-		if(root_->rightChild) root_->rightChild->parent = root_;
+		if(this->root_->leftChild) this->root_->leftChild->parent = this->root_;
+		if(this->root_->rightChild) this->root_->rightChild->parent = this->root_;
 	}
 	return true;
 }
@@ -23,7 +23,7 @@ template <class T> T* TreeSplay<T>::find(T key) {
 	Node<T>* ptr = findNode(key);
 	if(ptr==NULL) return NULL;
 	splay(ptr);
-	return &root_->key;
+	return &this->root_->key;
 }
 
 template <class T> T* TreeSplay<T>::remove(T key) {
@@ -39,7 +39,7 @@ template <class T> void TreeSplay<T>::R(Node<T>* ptr) {
 	if(ptr==NULL) throw 0;
 	Node<T>* newPtr = ptr->leftChild;
 	if(newPtr==NULL) throw 0;
-	if(ptr->parent==NULL) root_ = newPtr;
+	if(ptr->parent==NULL) this->root_ = newPtr;
 	else if(ptr->parent->leftChild==ptr) ptr->parent->leftChild = newPtr;
 	else ptr->parent->rightChild = newPtr;
 	newPtr->parent = ptr->parent;
@@ -53,7 +53,7 @@ template <class T> void TreeSplay<T>::L(Node<T>* ptr) {
 	if(ptr==NULL) throw 0;
 	Node<T>* newPtr = ptr->rightChild;
 	if(newPtr==NULL) throw 0;
-	if(ptr->parent==NULL) root_ = newPtr;
+	if(ptr->parent==NULL) this->root_ = newPtr;
 	else if(ptr->parent->leftChild==ptr) ptr->parent->leftChild = newPtr;
 	else ptr->parent->rightChild = newPtr;
 	newPtr->parent = ptr->parent;
@@ -92,22 +92,22 @@ template <class T> void TreeSplay<T>::splay(Node<T>* ptr) {
 template <class T> Node<T>* TreeSplay<T>::remove(Node<T>* ptr) {
 	if(ptr!=NULL) {
 		splay(ptr);
-		root_ = ptr->leftChild;
-		if(root_!=NULL) {
-			root_->parent = NULL;
+		this->root_ = ptr->leftChild;
+		if(this->root_!=NULL) {
+			this->root_->parent = NULL;
 			find(ptr->key);
-			root_->rightChild = ptr->rightChild;
-			if(root_->rightChild!=NULL) root_->rightChild->parent = root_;
+			this->root_->rightChild = ptr->rightChild;
+			if(this->root_->rightChild!=NULL) this->root_->rightChild->parent = this->root_;
 		} else {
-			root_ = ptr->rightChild;
-			if(root_!=NULL) root_->parent = NULL;
+			this->root_ = ptr->rightChild;
+			if(this->root_!=NULL) this->root_->parent = NULL;
 		}
 	}
 	return ptr;
 }
 
 template <class T> Node<T>* TreeSplay<T>::findNode(T key) {
-	Node<T>* ptr = root_;
+	Node<T>* ptr = this->root_;
 	Node<T>* parentPtr = NULL;
 	while(ptr!=NULL) {
 		parentPtr = ptr;
