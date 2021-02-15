@@ -5,12 +5,12 @@
 */
 
 #include "compare.hpp"
+#include <string>
 
 /**
 * pojedynczy węzeł drzewa
 */
-template <class T> class Node {
-public:
+template <class T> struct Node {
 	/**
 	* wskaźnik na rodzica
 	*/
@@ -34,6 +34,14 @@ public:
 	* @param parent wskaźnik na rodzica
 	*/
 	Node(T key, Node<T>* parent);
+	/**
+	* tworzy nowy węzeł
+	*
+	* @param key klucz węzła
+	* @param leftChild wskaźnik na lewe dziecko
+	* @param rightChild wskaźnik na prawe dziecko
+	*/
+	Node(T key, Node<T>* leftChild, Node<T>* rightChild);
 };
 
 /**
@@ -56,21 +64,25 @@ public:
 	* @param key klucz do wstawienia
 	* @return true - wstawiono element; false - element już istniał
 	*/
-	virtual void insert(T key);
+	virtual bool insert(T key);
 	/**
 	* usuwa podany element
 	*
 	* @param key klucz elementu do usunięia
-	* @return usunięty element, jeśli nie istniał - zwraca NULL
+	* @return usunięty element
 	*/
-	T remove(T key);
+	virtual T* remove(T key);
 	/**
 	* wyszukanie elementu
 	*
 	* @param key klucz elementu
-	* @return wyszukany element, jeśli nie ma - zwraca NULL
+	* @return wyszukany element
 	*/
-	virtual T find(T key);
+	virtual T* find(T key);
+	/**
+	* wyświetlanie drzewa
+	*/
+	void show();
 
 private:
 	/**
@@ -83,7 +95,7 @@ private:
 	* @param key wyszukiwany klucz
 	* @return wyszukany węzeł, jeżeli nie istnieje - NULL
 	*/
-	Node<T>* findNode(T key);
+	virtual Node<T>* findNode(T key);
 	/**
 	* usunięcie podanego węzła
 	*
@@ -112,6 +124,14 @@ private:
 	* @return następnik węzła
 	*/
 	Node<T>* succ(Node<T>* ptr);
+	/**
+	* wyświetlanie drzewa, funkcja pomocnicza
+	*
+	* @param ptr wyświetlany węzeł
+	* @param sp napis pomocniczy
+	* @param sn węzeł określający dziecko
+	*/
+	void show(Node<T>* ptr, std::string sp, std::string sn);
 };
 
 #include "tree.tpp"
