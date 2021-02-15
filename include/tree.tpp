@@ -9,6 +9,13 @@ template <class T> Node<T>::Node(T key, Node<T>* parent) {
 	rightChild = NULL;
 }
 
+template <class T> Node<T>::Node(T key, Node<T>* leftChild, Node<T>* rightChild) {
+	this->key = key;
+	parent = NULL;
+	this->leftChild = leftChild;
+	this->rightChild = rightChild;
+}
+
 template <class T> Tree<T>::Tree() {
 	root_ = NULL;
 }
@@ -17,14 +24,14 @@ template <class T> Tree<T>::~Tree() {
 	removeTree(root_);
 }
 
-template <class T> void Tree<T>::insert(T key) {
+template <class T> bool Tree<T>::insert(T key) {
 	Node<T>* ptr = root_;
 	Node<T>* parentPtr = NULL;
 	while(ptr!=NULL) {
 		parentPtr = ptr;
 		int sorceCompare = compare(key, ptr->key);
 		if(sorceCompare==0) {
-			throw 0;
+			return false;
 		} else if(sorceCompare==1) {
 			ptr = ptr->rightChild;
 		} else {
@@ -39,30 +46,31 @@ template <class T> void Tree<T>::insert(T key) {
 	} else {
 		parentPtr->leftChild = ptr;
 	}
+	return true;
 }
 
-template <class T> T Tree<T>::remove(T key) {
+template <class T> T* Tree<T>::remove(T key) {
 	Node<T>* ptr = findNode(key);
-	if(ptr==NULL) throw 0;
+	if(ptr==NULL) return NULL;
 	remove(ptr);
 	T score = ptr->key;
 	delete ptr;
-	return score;
+	return &score;
 }
 
-template <class T> T Tree<T>::find(T key) {
+template <class T> T* Tree<T>::find(T key) {
 	Node<T>* ptr = root_;
 	while(ptr!=NULL) {
 		int scoreCompare = compare(key, ptr->key);
 		if(scoreCompare==0) {
-			return ptr->key;
+			return &ptr->key;
 		} else if(scoreCompare==1) {
 			ptr = ptr->rightChild;
 		} else {
 			ptr = ptr->leftChild;
 		}
 	}
-	throw 0;
+	return NULL;
 }
 
 template <class T> void Tree<T>::show() {
