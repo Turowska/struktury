@@ -64,7 +64,29 @@ template <class T> void TreeSplay<T>::L(Node<T>* ptr) {
 }
 
 template <class T> void TreeSplay<T>::splay(Node<T>* ptr) {
-	
+	while(ptr->parent!=NULL) {
+		if(ptr->parent->parent==NULL) {
+			if(ptr->parent->leftChild==ptr) {
+				R(ptr->parent);
+			} else {
+				L(ptr->parent);
+			}
+		} else if(ptr->parent->parent->leftChild==ptr->parent) {
+			if(ptr->parent->leftChild==ptr) {
+				R(ptr->parent->parent);
+			} else {
+				L(ptr->parent);
+			}
+			R(ptr->parent);
+		} else {
+			if(ptr->parent->rightChild==ptr) {
+				L(ptr->parent->parent);
+			} else {
+				R(ptr->parent);
+			}
+			L(ptr->parent);
+		}
+	}
 }
 
 template <class T> Node<T>* TreeSplay<T>::remove(Node<T>* ptr) {
