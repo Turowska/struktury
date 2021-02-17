@@ -71,20 +71,20 @@ public:
 	* @param key klucz elementu do usunięia
 	* @return usunięty element
 	*/
-	virtual T* remove(T key);
+	virtual bool remove(T &key);
 	/**
 	* wyszukanie elementu
 	*
 	* @param key klucz elementu
 	* @return wyszukany element
 	*/
-	virtual T* find(T key);
+	virtual bool find(T &key);
 	/**
 	* wyświetlanie drzewa
 	*/
 	void show();
 
-private:
+protected:
 	/**
 	* korzeń drzewa
 	*/
@@ -95,7 +95,7 @@ private:
 	* @param key wyszukiwany klucz
 	* @return wyszukany węzeł, jeżeli nie istnieje - NULL
 	*/
-	virtual Node<T>* findNode(T key);
+	virtual Node<T>* findNode(T &key);
 	/**
 	* usunięcie podanego węzła
 	*
