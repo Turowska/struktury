@@ -24,14 +24,14 @@ public:
 	* @param key klucz elementu
 	* @return wyszukany element
 	*/
-	virtual T* find(T key);
+	virtual bool find(T &key);
 	/**
 	* usuwa podany element
 	*
 	* @param key klucz elementu do usunięia
 	* @return usunięty element
 	*/
-	virtual T* remove(T key);
+	virtual bool remove(T &key);
 
 private:
 	/**
@@ -65,7 +65,7 @@ private:
 	* @param key wyszukiwany klucz
 	* @return wyszukany węzeł, jeżeli nie istnieje - najbliższy wyszukiwanemu
 	*/
-	virtual Node<T>* findNode(T key);
+	virtual Node<T>* findNode(T &key);
 };
 
 #include "treeSplay.tpp"

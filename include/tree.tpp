@@ -49,28 +49,29 @@ template <class T> bool Tree<T>::insert(T key) {
 	return true;
 }
 
-template <class T> T* Tree<T>::remove(T key) {
+template <class T> bool Tree<T>::remove(T &key) {
 	Node<T>* ptr = findNode(key);
-	if(ptr==NULL) return NULL;
+	if(ptr==NULL) return false;
 	remove(ptr);
-	T score = ptr->key;
+	key = ptr->key;
 	delete ptr;
-	return &score;
+	return true;
 }
 
-template <class T> T* Tree<T>::find(T key) {
+template <class T> bool Tree<T>::find(T &key) {
 	Node<T>* ptr = root_;
 	while(ptr!=NULL) {
 		int scoreCompare = compare(key, ptr->key);
 		if(scoreCompare==0) {
-			return &ptr->key;
+			key = ptr->key;
+			return true;
 		} else if(scoreCompare==1) {
 			ptr = ptr->rightChild;
 		} else {
 			ptr = ptr->leftChild;
 		}
 	}
-	return NULL;
+	return false;
 }
 
 template <class T> void Tree<T>::show() {
@@ -95,7 +96,7 @@ template <class T> void Tree<T>::show(Node<T>* ptr, std::string sp, std::string 
 	}
 }
 
-template <class T> Node<T>* Tree<T>::findNode(T key) {
+template <class T> Node<T>* Tree<T>::findNode(T &key) {
 	Node<T>* ptr = root_;
 	while(ptr!=NULL) {
 		int scoreCompare = compare(key, ptr->key);
