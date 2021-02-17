@@ -121,5 +121,88 @@ template <class T> void TreeAVL<T>::RL(NodeAVL<T>* ptr) {
 }
 
 template <class T> Node<T>* TreeAVL<T>::remove(Node<T>* ptr) {
+	bool balance = true;
+	NodeAVL<T>* nextPtr = NULL;
+	NodeAVL<T>* parentNextPtr = (NodeAVL<T>*) ptr;
+//usuwanie
+	if(ptr->leftChild && ptr->rightChild) {
+		nextPtr = (NodeAVL<T>*) remove(pred(ptr));
+		nextPtr->bf = parentNextPtr->bf;
+		balance = false;
+	} else if(ptr->leftChild) {
+		nextPtr = ptr->leftChild;
+		ptr->leftChild = NULL;
+		nextPtr->bf = 0;
+	} else {
+		nextPtr = ptr->rightChild;
+		ptr->rightChild = NULL;
+		nextPtr->bf = 0;
+	}
+
+	if(nextPtr) {
+		nextPtr->parent = ptr->parent;
+		nextPtr->leftChild = ptr->leftChild; if(nextPtr->leftChild) nextPtr->leftChild->parent = nextPtr;
+		nextPtr->rightChild = ptr->rightChild; if(nextPtr->rightChild) nextPtr->rightChild->parent = nextPtr;
+	}
+
+	if(ptr->parent) {
+		if(ptr->parent->leftChild==ptr) ptr->parent->leftChild = nextPtr;
+		else ptr->parent->rightChild = nextPtr;
+	} else this->root_ = nextPtr;
+//zrównoważenie
+	if(balance) {
+		parentNextPtr = (NodeAVL<T>*) nextPtr->parent;
+		while(parentNextPtr) {
+			if(parentNextPtr->bf==0) {
+				if(parentNextPtr->leftChild==nextPtr) {
+					parentNextPtr->bf = -1;
+				} else {
+					parentNextPtr->bf = 1;
+				}
+				break;
+			} else if((parentNextPtr->bf==1&&parentNextPtr->leftChild==nextPtr)||(parentNextPtr->bf==-1&&parentNextPtr->rightChild==nextPtr)) {
+				parentNextPtr->bf=0;
+				nextPtr = parentNextPtr;
+				parentNextPtr = (NodeAVL<T>*) parentNextPtr->parent;
+			} else {
+				NodeAVL<T>* pom;
+				if(parentNextPtr->leftChild==nextPtr) {
+					pom = (NodeAVL<T>*) parentNextPtr->rightChild;
+				} else {
+					pom = (NodeAVL<T>*) parentNextPtr->leftChild;
+				}
+				if(pom->bf==0) {
+					if(parentNextPtr->bf==1) {
+						++parentNextPtr->bf;
+						LL(parentNextPtr);
+					} else {
+						--parentNextPtr->bf;
+						RR(parentNextPtr);
+					}
+					break;
+				} else if(pom->bf==parentNextPtr->bf) {
+					if(parentNextPtr->bf==1) {
+						++parentNextPtr->bf;
+						LL(parentNextPtr);
+					} else {
+						--parentNextPtr->bf;
+						RR(parentNextPtr);
+					}
+					nextPtr = pom;
+					parentNextPtr = (NodeAVL<T>*) pom->parent;
+				} else {
+					if(parentNextPtr->bf==1) {
+						++parentNextPtr->bf;
+						LR(parentNextPtr);
+					} else {
+						--parentNextPtr->bf;
+						RL(parentNextPtr);
+					}
+					nextPtr = (NodeAVL<T>*) parentNextPtr->parent;
+					parentNextPtr = (NodeAVL<T>*) nextPtr->parent;
+				}
+			}
+		}
+	}
 	return NULL;
 }
