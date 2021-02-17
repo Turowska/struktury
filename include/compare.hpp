@@ -9,18 +9,25 @@
 */
 
 /**
-* porównuje dwie liczby int
+* porównuje dwie zmienne
 *
-* @param firstKey pierwsza liczba
-* @param secondKey druga liczba
-* @return 0 - dwie liczby są równe; 1 - pierwsza liczba jest większa od drugiej; -1 - pierwsza liczba jest mniejsza od rugiej
+* @param firstKey pierwsza zmienna
+* @param secondKey druga zmienna
+* @return 0 - dwie zmienne są równe; 1 - pierwsza zmienna jest większa od drugiej; -1 - pierwsza zmienna jest mniejsza od rugiej
 */
-int compare(int firstKey, int secondKey);
-/**
-* porównuje dwa łańcuchy znaków
-*
-* @param firstKey pierwszy napis
-* @param secondKey drugi napis
-* @return 0 - dwa napisy są równe; 1 - pierwszy napis jest większy od drugiego; -1 - pierwsza liczba jest mniejsza od rugiej
-*/
-int compare(std::string firstKey, std::string secondKey);
+template <class T> int compare(T firstKey, T secondKey) {
+	throw 0;
+	return 0;
+}
+
+template <> int compare<int> (int firstKey, int secondKey) {
+	if(firstKey==secondKey) return 0;
+	else if(firstKey > secondKey) return 1;
+	else return -1;
+}
+
+template <> int compare<std::string> (std::string firstKey, std::string secondKey) {
+	if(firstKey==secondKey) return 0;
+	else if(firstKey > secondKey) return 1;
+	else return -1;
+}
