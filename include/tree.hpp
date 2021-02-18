@@ -5,7 +5,6 @@
 */
 
 #include "compare.hpp"
-#include <string>
 
 /**
 * pojedynczy węzeł drzewa
@@ -45,7 +44,7 @@ template <class T> struct Node {
 };
 
 /**
-* drzewo
+* drzewo BTS
 */
 template <class T> class Tree {
 
@@ -69,14 +68,14 @@ public:
 	* usuwa podany element
 	*
 	* @param key klucz elementu do usunięia
-	* @return usunięty element
+	* @return true - usunięto element; false - nie ma takiego elementu
 	*/
 	virtual bool remove(T &key);
 	/**
 	* wyszukanie elementu
 	*
 	* @param key klucz elementu
-	* @return wyszukany element
+	* @return true - znaleziono element i umieszczono w podanym argumencie; false - nie ma elementu
 	*/
 	virtual bool find(T &key);
 	/**
@@ -103,6 +102,8 @@ protected:
 	* @return usuwany węzeł
 	*/
 	virtual Node<T>* remove(Node<T>* ptr);
+
+private:
 	/**
 	* funkcja pomocnicza do niszczenia drzewa
 	* usuwa poddrzewo
